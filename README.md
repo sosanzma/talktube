@@ -40,3 +40,16 @@ sudo apt install ffmpeg
 
 You can read the following article if you're working on an operating system that hasn't been mentioned earlier
  (like Windows). It contains comprehensive, step-by-step instructions on [How to install ffmpeg](https://www.hostinger.com/tutorials/how-to-install-ffmpeg).
+
+
+### Configuration
+
+You need to configure the `config.py` file with your API keys and other necessary values. Add the following values to `config.py`:
+
+```python
+OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY'
+ACTIVELOOP_TOKEN = 'YOUR_ACTIVELOOP_TOKEN'
+ACTIVELOOP_ID = 'YOUR_ACTIVELOOP_ID'
+``` 
+
+Replace ``YOUR_OPENAI_API_KEY``, ``YOUR_ACTIVELOOP_TOKEN``, and ``YOUR_ACTIVELOOP_ID`` with your actual API keys and ActiveLoop ID.
