@@ -2,6 +2,8 @@ langchain==0.0.208
 deeplake==3.6.5
 openai==0.27.8
 tiktoken==0.4.0
-whisper
+openai-whisper
 pytube
 yt-dlp
+langchain-community
+langchain_core
