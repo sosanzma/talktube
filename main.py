@@ -2,16 +2,17 @@ from config import OPENAI_API_KEY, ACTIVELOOP_TOKEN
 import os
 from download.youtube_downloader import download_mp4_from_youtube
 from transcribe.transcriber import transcribe_video
-from config import ACTIVELOOP_ID
+from config import ACTIVELOOP_ID, OPEN_SOURCE_MODEL
 from process.text_processor import split_text
 from retriever.deep_lake_retriever import create_retriever
 from qa.qa_system import setup_qa_system, is_relevant_answer
 
 urls = ["https://www.youtube.com/watch?v=v4T1oknATGU", "https://www.youtube.com/watch?v=cjs7QKJNVYM"]
 
-if os.path.exists('text_2videos.txt'):
+
+if os.path.exists('data/text_2videos.txt'):
     print("The file text_2videos.txt already exists. Reading its content.")
-    with open('text_2videos.txt', 'r') as file:
+    with open('data/text_2videos.txt', 'r') as file:
         text = file.read()
 else:
     videos_details = download_mp4_from_youtube(urls, 1)
@@ -21,14 +22,17 @@ else:
         results.append(result)
         print(f"Transcription for {video[0]}:\n{result}\n")
     all_transcriptions = "\n\n".join(results)
-    with open('text_2videos.txt', 'w') as file:
+    with open('data/text_2videos.txt', 'w') as file:
         file.write(all_transcriptions)
-    with open('text_2videos.txt', 'r') as file:
+    with open('data/text_2videos.txt', 'r') as file:
         text = file.read()
 
 docs = split_text(text)
-retriever = create_retriever(docs, ACTIVELOOP_ID, "youtube_qa")
-qa = setup_qa_system(retriever)
+retriever = create_retriever(docs, ACTIVELOOP_ID, "talktube_video1", open_model=OPEN_SOURCE_MODEL)
+
+# Choose the model you want to use, e.g., "llama3" for ChatOllama, "openai" for OpenAI
+model_name = "llama3" if OPEN_SOURCE_MODEL else "openai"
+qa = setup_qa_system(retriever, model_name=model_name)
 
 questions = [
     "Summarize the mentions of Google according to their AI program.",

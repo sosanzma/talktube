@@ -1,9 +1,13 @@
-from langchain.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain.chains import RetrievalQA
 from langchain import OpenAI, LLMChain
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import  StrOutputParser
+from langchain_community.chat_models import ChatOllama
+from langchain_community.embeddings import OllamaEmbeddings
 
 
-def setup_qa_system(retriever):
+def setup_qa_system(retriever, model_name="openai", temperature=0.2):
     prompt_template = """Use the following pieces of transcripts from a video to answer the question in bullet points and summarized.
     If you don't know the answer, just say that you don't know, don't try to make up an answer.
 
@@ -16,7 +20,11 @@ def setup_qa_system(retriever):
         template=prompt_template, input_variables=["context", "question"]
     )
 
-    llm = OpenAI(model_name="gpt-3.5-turbo-16k", temperature=0)
+    if model_name == "openai":
+        llm = OpenAI(model_name="gpt-3.5-turbo-16k", temperature=temperature)
+    else:
+        llm = ChatOllama(model=model_name, temperature=temperature)
+
     chain_type_kwargs = {"prompt": PROMPT}
 
     qa = RetrievalQA.from_chain_type(
