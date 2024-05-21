@@ -1,10 +1,11 @@
 from config import OPENAI_API_KEY, ACTIVELOOP_TOKEN
+import os
 from download.youtube_downloader import download_mp4_from_youtube
 from transcribe.transcriber import transcribe_video
 from config import ACTIVELOOP_ID
 from process.text_processor import split_text
 from retriever.deep_lake_retriever import create_retriever
-from qa.qa_system.py import setup_qa_system, is_relevant_answer
+from qa.qa_system import setup_qa_system, is_relevant_answer
 
 urls = ["https://www.youtube.com/watch?v=v4T1oknATGU", "https://www.youtube.com/watch?v=cjs7QKJNVYM"]
 
