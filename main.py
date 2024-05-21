@@ -26,7 +26,7 @@ else:
         text = file.read()
 
 docs = split_text(text)
-retriever = create_retriever(docs, "sosanzma", "youtube_qa")
+retriever = create_retriever(docs, ACTIVELOOP_ID, "youtube_qa")
 qa = setup_qa_system(retriever)
 
 questions = [
