@@ -10,6 +10,7 @@ from langchain_community.embeddings import OllamaEmbeddings
 def setup_qa_system(retriever, model_name="openai", temperature=0.2):
     prompt_template = """Use the following pieces of transcripts from a video to answer the question in bullet points and summarized.
     If you don't know the answer, just say that you don't know, don't try to make up an answer.
+    If the question  is asked in other language, you  must answer in those language too.
 
     {context}
 
